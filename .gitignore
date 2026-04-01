@@ -1,0 +1,29 @@
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+bin/
+obj/
+
+## NuGet
+*.nupkg
+packages/
+!packages/repositories.config
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## Database
+*.db
+*.db-shm
+*.db-wal
+
+## OS
+.DS_Store
+Thumbs.db
