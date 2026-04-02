@@ -12,6 +12,7 @@ namespace SmartTicketSystemBackend.Data
         public DbSet<Ticket> Tickets => Set<Ticket>();
         public DbSet<TicketComment> TicketComments => Set<TicketComment>();
         public DbSet<TicketEmailLog> TicketEmailLogs => Set<TicketEmailLog>();
+        public DbSet<TicketActivity> TicketActivities => Set<TicketActivity>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -75,6 +76,19 @@ namespace SmartTicketSystemBackend.Data
                 .WithMany(t => t.EmailLogs)
                 .HasForeignKey(e => e.TicketId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // TicketActivity
+            modelBuilder.Entity<TicketActivity>()
+                .HasOne(a => a.Ticket)
+                .WithMany(t => t.Activities)
+                .HasForeignKey(a => a.TicketId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TicketActivity>()
+                .HasOne(a => a.User)
+                .WithMany()
+                .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

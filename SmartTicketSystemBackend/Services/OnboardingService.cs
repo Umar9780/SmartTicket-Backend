@@ -58,6 +58,9 @@ namespace SmartTicketSystemBackend.Services
 
         public async Task<User> InviteUserAsync(int organizationId, InviteUserDto dto)
         {
+            if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
+                throw new InvalidOperationException("A user with this email already exists.");
+
             if (!Enum.TryParse<UserRole>(dto.Role, out var role))
                 role = UserRole.Agent;
 

@@ -34,6 +34,7 @@ namespace SmartTicketSystemBackend.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public DateTime? ResolvedAt { get; set; }
+        public DateTime? DueDate { get; set; }
 
         [MaxLength(500)]
         public string? CustomerEmail { get; set; }
@@ -41,7 +42,12 @@ namespace SmartTicketSystemBackend.Models
         [MaxLength(200)]
         public string? CustomerName { get; set; }
 
+        // Comma-separated tags e.g. "bug,billing,urgent-client"
+        [MaxLength(500)]
+        public string? Tags { get; set; }
+
         public ICollection<TicketComment> Comments { get; set; } = new List<TicketComment>();
         public ICollection<TicketEmailLog> EmailLogs { get; set; } = new List<TicketEmailLog>();
+        public ICollection<TicketActivity> Activities { get; set; } = new List<TicketActivity>();
     }
 }

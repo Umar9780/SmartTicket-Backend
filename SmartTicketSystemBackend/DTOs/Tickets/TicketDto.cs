@@ -24,6 +24,10 @@ namespace SmartTicketSystemBackend.DTOs.Tickets
 
         [MaxLength(200)]
         public string? CustomerName { get; set; }
+
+        public DateTime? DueDate { get; set; }
+
+        public List<string>? Tags { get; set; }
     }
 
     public class UpdateTicketDto
@@ -40,6 +44,8 @@ namespace SmartTicketSystemBackend.DTOs.Tickets
         public string? Category { get; set; }
 
         public int? AssignedToId { get; set; }
+        public DateTime? DueDate { get; set; }
+        public List<string>? Tags { get; set; }
     }
 
     public class TicketResponseDto
@@ -62,15 +68,17 @@ namespace SmartTicketSystemBackend.DTOs.Tickets
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public DateTime? ResolvedAt { get; set; }
+        public DateTime? DueDate { get; set; }
+        public List<string> Tags { get; set; } = new();
         public int CommentCount { get; set; }
         public List<CommentResponseDto> Comments { get; set; } = new();
+        public List<ActivityResponseDto> Activities { get; set; } = new();
     }
 
     public class AddCommentDto
     {
         [Required]
         public string Content { get; set; } = string.Empty;
-
         public bool IsInternal { get; set; } = false;
     }
 
@@ -85,6 +93,20 @@ namespace SmartTicketSystemBackend.DTOs.Tickets
         public DateTime CreatedAt { get; set; }
     }
 
+    public class ActivityResponseDto
+    {
+        public int Id { get; set; }
+        public int TicketId { get; set; }
+        public string TicketNumber { get; set; } = string.Empty;
+        public int UserId { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public string Type { get; set; } = string.Empty;
+        public string? OldValue { get; set; }
+        public string? NewValue { get; set; }
+        public string? Description { get; set; }
+        public DateTime CreatedAt { get; set; }
+    }
+
     public class TicketStatsDto
     {
         public int Total { get; set; }
@@ -93,5 +115,7 @@ namespace SmartTicketSystemBackend.DTOs.Tickets
         public int Resolved { get; set; }
         public int Closed { get; set; }
         public int Urgent { get; set; }
+        public int Overdue { get; set; }
+        public double AvgResolutionHours { get; set; }
     }
 }

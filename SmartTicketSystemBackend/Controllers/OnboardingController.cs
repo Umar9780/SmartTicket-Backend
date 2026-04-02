@@ -28,9 +28,16 @@ namespace SmartTicketSystemBackend.Controllers
         [HttpPost("invite")]
         public async Task<IActionResult> InviteUser([FromBody] InviteUserDto dto)
         {
-            var orgId = int.Parse(User.FindFirstValue("OrganizationId")!);
-            var user = await _onboardingService.InviteUserAsync(orgId, dto);
-            return Ok(new { user.Id, user.FullName, user.Email, Role = user.Role.ToString() });
+            try
+            {
+                var orgId = int.Parse(User.FindFirstValue("OrganizationId")!);
+                var user = await _onboardingService.InviteUserAsync(orgId, dto);
+                return Ok(new { user.Id, user.FullName, user.Email, Role = user.Role.ToString() });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [Authorize]
